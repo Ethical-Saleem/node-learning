@@ -1,0 +1,49 @@
+body {
+    background: #E8E8E8;
+    margin: 0px;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #FFCC33;
+    padding-left: 16px;
+    padding-right: 16px;
+    top: 0;
+    left: 0;
+    right: 0;
+    position: fixed;
+    color: #FFFFFF;
+}
+
+.nav .nav-title {
+    font-size: 24px;
+    line-height: 36px;
+    font-weight: 700;
+    margin: 16px;
+}
+
+.nav .nav-links {
+    display: flex;
+    flex-direction: row;
+    margin: 16px;
+}
+
+.nav .nav-links .nav-link {
+    padding: 8px 12px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.nav .nav-links .nav-link:active {
+    font-weight: 700;
+}
+
+.main-content {
+    margin-left: 16px;
+    margin-right: 16px;
+    padding-top: 75px;
+}
