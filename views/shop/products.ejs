@@ -1,0 +1,60 @@
+<%- include('../includes/head.ejs') %>
+  </head>
+  <body>
+    <%- include('../includes/nav.ejs') %>
+    <div class="sub-nav">
+      <div class="page-pane">
+        <p class="page-title">Products</p>
+      </div>
+    </div>
+    <div class="main-content">
+      <% if (prods.length > 0) { %>
+      <div class="content-pane">
+        <% for (let p of prods) { %>
+        <div class="card-block">
+          <div class="header">
+            <p><%= p.name %></p>
+          </div>
+          <div class="body">
+            <div class="body-content">
+              <div class="image">
+                <img
+                src="<%= p.imgUrl %>"
+                alt="shoe"
+                height="200"
+                width="250"
+                />
+              </div>
+              <div class="desc">
+                <div class="">
+                  <span class="desc-title">Description</span>
+                  <p class="desc-text"><%= p.description %></p>
+                </div>
+                <div class="price">
+                  <span class="price-title">Price</span>
+                  <span class="price-tag">$<%= p.amount %></span>
+                </div>
+              </div>
+            </div>
+            <div class="actions">
+              <a href="/products/<%= p.id %>" class="view-btn">View</a>
+              <div class="">
+                <form action="/cart" method="POST">
+                  <button type="submit" class="cart-btn">
+                    Add to Cart
+                  </button>
+                  <input type="hidden" name="productId" value="<%= p.id %>" />
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% } %>
+      </div>
+      <% } else { %>
+        <div class="zero-pane">
+          <p class="no-prod">No Products found</p>
+        </div>
+      <% } %>
+    </div>
+<%- include('../includes/end.ejs') %>

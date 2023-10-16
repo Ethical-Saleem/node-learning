@@ -2,21 +2,24 @@ const path = require("path");
 
 const express = require("express");
 
-const rootDir = require("../utils/path")
+// importing controllers
+const productController = require("../controllers/products");
+const adminController = require("../controllers/admin");
 
 const router = express.Router(); // Declare an express router
 
-router.get('/messages', (req, res, next) => {
-    // use ".send" to send a response
-    res.sendFile(path.join(rootDir, 'views', 'messages.html'))
-});
+router.get('/new-product', adminController.getAddProduct); // using controllers
+
+router.get('/products', adminController.getProducts);
+
+router.get('/products/:productId', adminController.getProduct)
+
+router.get('/edit-product')
 
 // This middleware will only run for "POST" requests
-router.post('/postMessage', (req, res, next) => {
-    console.log(req.body)
-    res.redirect('/') // for redirecting
-});
+router.post('/postProduct', adminController.postAddProduct);
 
 module.exports = router;
+// exports.products = products;
 
 // Using ".use" allows the middleware to handle all http methods (POST, GET, PUT, DELETE, etc)

@@ -7,11 +7,14 @@ const bodyPasrser = require("body-parser");
 
 const rootDir = require("./utils/path")
 
+const app = express() // creating express instance
+
+app.set('view engine', 'ejs');
+app.set('views', 'views')
+
 // importing our routes
 const adminRoutes = require("./routes/admin");
-const messageRoutes = require("./routes/messages");
-
-const app = express() // creating express instance
+const prodRoutes = require("./routes/shop");
 
 // Creating Middlewares
 // create middlewares from topmost to bottom if you don't want to use the "next" argument
@@ -19,11 +22,14 @@ app.use(bodyPasrser.urlencoded({extended: false})) //create a middleware for bod
 app.use(express.static(path.join(rootDir, 'public'))); // for serving static files
 
 app.use('/admin', adminRoutes);
-app.use(messageRoutes);
+app.use(prodRoutes);
 
 // creating 404 Not Found Page
 app.use((req, res, next) => {
-    res.status(404).sendFile(path.join(rootDir, 'views', 'not-found.html'))
+    res.status(404).render('404', {
+        pageTitle: '404 Not found',
+        path: '/not-found'
+    })
 })
 
 app.listen(3000)

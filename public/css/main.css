@@ -1,20 +1,26 @@
 body {
     background: #E8E8E8;
     margin: 0px;
+    padding: 0px;
+}
+
+.header-nav {
+    top: 0;
+    left: 0;
+    right: 0;
+    position: fixed;
+    background: #FFCC33;
 }
 
 .nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #FFCC33;
     padding-left: 16px;
     padding-right: 16px;
-    top: 0;
-    left: 0;
-    right: 0;
-    position: fixed;
+    height: 60px;
     color: #FFFFFF;
+    
 }
 
 .nav .nav-title {
@@ -22,28 +28,239 @@ body {
     line-height: 36px;
     font-weight: 700;
     margin: 16px;
+    text-decoration: none;
+    color: #FFFFFF;
 }
 
 .nav .nav-links {
     display: flex;
     flex-direction: row;
     margin: 16px;
+    list-style-type: none;
 }
 
 .nav .nav-links .nav-link {
     padding: 8px 12px;
-    font-size: 16px;
-    font-weight: 400;
-    color: #FFFFFF;
+}
+
+a {
     text-decoration: none;
 }
 
-.nav .nav-links .nav-link:active {
+.nav .nav-links .nav-link a {
+    font-size: 14px;
+    font-weight: 400;
+    color: #FFFFFF;
+}
+
+.nav .nav-links .nav-link a.active {
     font-weight: 700;
+}
+
+.nav .nav-links .nav-link a.active .link-text {
+    padding-bottom: 8px;
+    text-decoration: underline;
+}
+
+.sub-nav {
+    position: fixed;
+    background: #FFFFFF;
+    right: 0;
+    left: 0;
+    margin-top: 60px;
+}
+.page-pane {
+    height: 45px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px 0 16px;
+}
+.page-pane .page-title {
+    font-size: 20px;
+    font-weight: 500;
+    color: #FFCC33;
+    margin: 8px 16px 8px 16px;
 }
 
 .main-content {
     margin-left: 16px;
     margin-right: 16px;
-    padding-top: 75px;
+    padding-top: 110px;
+}
+
+.main-content.not-found {
+    margin-left: 16px;
+    margin-right: 16px;
+    padding-top: 70px;
+}
+
+.add-form {
+    margin-left: 25%;
+    margin-right: 25%;
+    padding: 24px;
+}
+
+.form-group {
+    margin-bottom: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group .form-label {
+    margin-bottom: 5px;
+}
+.form-group .form-input {
+    padding: 8px 10px;
+}
+
+.add-form .submit {
+    padding: 8px 20px;
+    border-radius: 8px;
+    border: 2px solid #FFCC33;
+    background: #FFFFFF;
+    color: #FFCC33;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.main-content .content-pane {
+    margin-top: 8px;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-gap: 2px;
+}
+
+
+.main-content .card-block {
+    background: #FFFFFF;
+    border: 1px solid #FFCC33;
+    border-radius:  8px;
+    width: 300px;
+}
+
+.main-content .card-block .header {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 24px;
+    border-bottom: 1px solid #CCCCCC;
+}
+
+.main-content .card-block .header-view {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 16px;
+    padding-left: 16px;;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 21px;
+    border-bottom: 1px solid #CCCCCC;
+}
+
+.main-content .card-block .header-view .cart-btn {
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 14px;
+    border: 2px solid #FFCC33;
+    background: #FFFFFF;
+    color: #FFCC33;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.main-content .card-block .body {
+    padding: 12px 16px 12px 16px;
+}
+
+.main-content .card-block .body .body-content {
+    margin-bottom: 20px;
+}
+
+.main-content .card-block .body .image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.main-content .card-block .body .desc {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.main-content .card-block .body .desc .desc-title {
+    font-size: 13px;
+    font-weight: 400;
+    display: block
+}
+
+.main-content .card-block .body .desc .desc-text {
+    font-size: 16px;
+    font-weight: 400;
+    margin: 10px 0;
+}
+
+.main-content .card-block .body .desc .price .price-title {
+    font-size: 13px;
+    font-weight: 400;
+    display: block
+}
+
+.main-content .card-block .body .desc .price .price-tag {
+    font-size: 16px;
+    font-weight: 700;
+    display: block;
+    margin: 10px 0;
+}
+
+.main-content .card-block .body .actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.main-content .card-block .body .actions.admin {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.main-content .card-block .body .cart-btn {
+    padding: 8px 20px;
+    border-radius: 8px;
+    border: 2px solid #FFCC33;
+    background: #FFFFFF;
+    color: #FFCC33;
+    font-weight: 700;
+}
+
+.main-content .card-block .body .actions .view-btn {
+    padding: 8px 20px;
+    border-radius: 8px;
+    border: 2px solid #08dd08;
+    background: #FFFFFF;
+    color: #08dd08;
+    font-weight: 700;
+}
+
+.main-content .card-block .body .actions .edit-btn {
+    padding: 8px 20px;
+    border-radius: 8px;
+    border: 2px solid #1c30e9;
+    background: #FFFFFF;
+    color: #1c30e9;
+    font-weight: 700;
+}
+
+.main-content .card-block .body .actions .del-btn {
+    padding: 8px 20px;
+    border-radius: 8px;
+    border: 2px solid #d12323;
+    background: #FFFFFF;
+    color: #d12323;
+    font-weight: 700;
 }

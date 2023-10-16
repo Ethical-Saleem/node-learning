@@ -1,0 +1,34 @@
+<div class="header-nav">
+  <nav class="nav">
+    <h6 class="">
+      <a class="nav-title" href="/">Home</a>
+    </h6>
+    <ul class="nav-links">
+      <li class="nav-link">
+        <a class="<%= path === '/' ? 'active' : ''%>" href="/">
+          <span class="link-text">Home</span>
+        </a>
+      </li>
+      <li class="nav-link">
+        <a class="<%= path === '/products' ? 'active' : ''%>" href="/products">
+          <span class="link-text">Products</span>
+        </a>
+      </li>
+      <li class="nav-link">
+        <a class="<%= path === '/cart' ? 'active' : ''%>" href="/cart">
+          <span class="link-text">Cart</span>
+        </a>
+      </li>
+      <li class="nav-link">
+        <a class="<%= path === '/admin/products' ? 'active' : ''%>" href="/admin/products">
+          <span class="link-text">Admin Products</span>
+        </a>
+      </li>
+      <li class="nav-link">
+        <a class="<%= path === '/admin/new-product' ? 'active' : ''%>" href="/admin/new-product">
+          <span class="link-text">Add Product</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>

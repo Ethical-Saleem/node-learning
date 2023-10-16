@@ -1,0 +1,45 @@
+<%- include('../includes/head.ejs') %>
+  </head>
+  <body>
+    <%- include('../includes/nav.ejs') %>
+    <div class="sub-nav">
+      <div class="page-pane">
+        <p class="page-title"><%= prod.name %></p>
+      </div>
+    </div>
+    <div class="main-content">
+      <div class="product">
+        <div class="card-block">
+            <div class="header-view">
+              <p><%= prod.name %></p>
+            </div>
+            <div class="body">
+              <div class="body-content">
+                <div class="image">
+                  <img
+                  src="<%= prod.imgUrl %>"
+                  alt="shoe"
+                  height="200"
+                  width="250"
+                  />
+                </div>
+                <div class="desc">
+                  <div class="">
+                    <span class="desc-title">Description</span>
+                    <p class="desc-text"><%= prod.description %></p>
+                  </div>
+                  <div class="price">
+                    <span class="price-title">Price</span>
+                    <span class="price-tag">$<%= prod.amount %></span>
+                  </div>
+                </div>
+              </div>
+              <div class="actions admin">
+                <a href="/admin/products/<%= prod.id %>" class="edit-btn">Edit</a>
+                <a href="/admin/products/<%= prod.id %>" class="del-btn">Delete</a>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+<%- include('../includes/end.ejs') %>
