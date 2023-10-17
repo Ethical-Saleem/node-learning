@@ -8,8 +8,53 @@
       </div>
     </div>
     <div class="main-content">
-        <div class="zero-pane">
-          <p class="no-prod">No Products found</p>
+      <% if (products.length > 0) { %>
+        <div class="content-pane">
+          <% for (let p of products) { %>
+            <div class="card-block">
+              <div class="header-view">
+                <p><%= p.productData.name %></p>
+                <span>(<%= p.quantity %>)</span>
+              </div>
+              <div class="body">
+                <div class="body-content">
+                  <div class="image">
+                    <img
+                    src="<%= p.productData.imgUrl %>"
+                    alt="shoe"
+                    height="200"
+                    width="250"
+                    />
+                  </div>
+                  <div class="desc">
+                    <div class="">
+                      <span class="desc-title">Description</span>
+                      <p class="desc-text"><%= p.productData.description %></p>
+                    </div>
+                    <div class="price">
+                      <span class="price-title">Price</span>
+                      <span class="price-tag">$<%= p.productData.amount %></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="actions">
+                  <div class="">
+                    <form action="/cart/removeItem" method="POST">
+                      <button type="submit" class="cart-btn">
+                        Remove
+                      </button>
+                      <input type="hidden" name="productId" value="<%= p.productData.id %>" />
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% } %>
         </div>
+      <% } else { %>
+        <div class="zero-pane">
+          <p class="no-prod">No Product available in your cart!</p>
+        </div>
+      <% } %>
     </div>
 <%- include('../includes/end.ejs') %>

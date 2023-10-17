@@ -14,10 +14,14 @@ router.get('/products', adminController.getProducts);
 
 router.get('/products/:productId', adminController.getProduct)
 
-router.get('/edit-product')
+router.get('/edit-product/:productId', adminController.getEditProduct);
 
 // This middleware will only run for "POST" requests
 router.post('/postProduct', adminController.postAddProduct);
+
+router.post('/updateProduct', adminController.updateProduct);
+
+router.post('/deleteProduct', adminController.deleteProduct);
 
 module.exports = router;
 // exports.products = products;
