@@ -3,14 +3,17 @@ const Cart = require("../models/cart")
 
 exports.getIndex = (req, res, next) => {
   // statically fetching all available products from the class model
-  Product.fetchAll((products) => {
-    res.render("shop/index", {
-      pageTitle: "Home",
-      path: "/",
-      prods: products,
-      hasProducts: products.length > 0,
+  Product.fetchAll()
+    .then(([rows, meta]) => {
+      res.render("shop/index", {
+        pageTitle: "Home",
+        path: "/",
+        prods: rows
+      });
+    })
+    .catch(err => {
+      console.log(err)
     });
-  });
 };
 
 exports.getCart = (req, res, next) => {

@@ -2,25 +2,30 @@ const Product = require("../models/products"); // importing the class model
 
 exports.getProducts = (req, res, next) => {
   // statically fetching all available products from the class model
-  Product.fetchAll((products) => {
-    res.render("admin/products", {
-      pageTitle: "Products",
-      path: "/products",
-      prods: products,
-      hasProducts: products.length > 0,
+  Product.fetchAll()
+    .then(([rows]) => {
+      res.render("admin/products", {
+        pageTitle: "Products",
+        path: "admin/products",
+        prods: rows
+      });
+    })
+    .catch(err => {
+      console.log(err)
     });
-  });
 };
 
 exports.getProduct = (req, res, next) => {
   const id = req.params.productId;
-  Product.getProduct(id, (product) => {
-    res.render("admin/product", {
-      pageTitle: product.name,
-      path: "/products",
-      prod: product,
-    });
-  });
+  Product.getProduct(id)
+    .then(([product]) => {
+      res.render("admin/product", {
+        pageTitle: product[0].name,
+        path: "/products",
+        prod: product[0],
+      });
+    })
+    .catch(err => console.log(err))
 };
 
 exports.getAddProduct = (req, res, next) => {
@@ -35,10 +40,10 @@ exports.getAddProduct = (req, res, next) => {
 exports.postAddProduct = (req, res, next) => {
   // creating new product instance
   const id = null;
-  const name = req.body.name;
+  const name = req.body.productName;
   const description = req.body.description;
   const amount = req.body.amount;
-  const image = req.body.imgUrl;
+  const image = req.body.imageUrl;
   const product = new Product(
     id,
     name,
@@ -46,8 +51,14 @@ exports.postAddProduct = (req, res, next) => {
     amount,
     image
   );
-  product.save(); // saving the product using the "saveAll" function declared in the model
-  res.redirect("/"); // for redirecting
+  product
+    .save()
+    .then(rest => {
+      res.redirect("/admin/products")
+    })
+    .catch(err => {
+      console.log(err)
+    }); // saving the product using the "saveAll" function declared in the model
 };
 
 exports.getEditProduct = (req, res, next) => {
