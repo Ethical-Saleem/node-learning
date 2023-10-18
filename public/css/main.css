@@ -73,7 +73,16 @@ a {
     height: 45px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     padding: 0 16px 0 16px;
+}
+.page-pane .checkout-btn {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 2px solid #08dd08;
+    background: #FFFFFF;
+    color: #08dd08;
+    font-weight: 700;
 }
 .page-pane .page-title {
     font-size: 20px;
@@ -263,4 +272,49 @@ a {
     background: #FFFFFF;
     color: #d12323;
     font-weight: 700;
+}
+
+.main-content .order-pane {
+    margin-left: 10%;
+    margin-right: 10%;
+    padding: 24px;
+}
+
+.main-content .order-pane .order-lists .list-item {
+    background: #FFFFFF;
+    padding: 20px 20px;
+    align-items: center;
+}
+
+.main-content .order-pane .order-lists .list-item .s_n {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.main-content .order-pane .order-lists .list-item .item-pane {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.main-content .order-pane .order-lists .list-item .item-desc {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.main-content .order-pane .order-lists .list-item .item-desc>span {
+    margin-bottom: 5px;
+}
+
+.main-content .order-pane .order-lists .list-item .item-action .order-view-btn {
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 2px solid #FFCC33;
+    background: #FFFFFF;
+    color: #FFCC33;
+    font-weight: 500;
+    cursor: pointer;
 }

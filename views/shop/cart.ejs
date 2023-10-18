@@ -5,6 +5,14 @@
     <div class="sub-nav">
       <div class="page-pane">
         <p class="page-title">Cart</p>
+        <div class="">
+          <form action="/checkout" method="POST">
+            <button type="submit" class="checkout-btn">
+              Checkout
+            </button>
+            <input type="hidden" name="productId" value="" />
+          </form>
+        </div>
       </div>
     </div>
     <div class="main-content">

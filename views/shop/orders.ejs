@@ -1,0 +1,46 @@
+<%- include('../includes/head.ejs') %>
+  </head>
+  <body>
+    <%- include('../includes/nav.ejs') %>
+    <div class="sub-nav">
+      <div class="page-pane">
+        <p class="page-title">Your Orders</p>
+      </div>
+    </div>
+    <div class="main-content">
+      <div class="order-pane">
+        <% if (orders.length > 0) { %>
+            <div class="order-lists">
+                <% for (let order of orders) { %>
+                    <div class="list-item">
+                        <div class="item-pane">
+                            <div class="s_n">
+                                <span class="serial">#<%= order.id %></span>
+                            </div>
+                            <div class="item-action">
+                                <button type="submit" class="order-view-btn">
+                                    View
+                                </button>
+                            </div>
+                        </div>
+                        <hr>
+                        <% for (let p of order.products) { %>
+                            <div class="item-desc">
+                                <span class="s/n"><%= p.id %></span>
+                                <span class="txnId"><%= p.productName %></span>
+                                <span class="desc"><%= p.description %></span>
+                                <span class="price">$ <%= p.amount %></span>
+                            </div>
+                        <% } %>
+                    </div>
+                <% } %>
+            </div>
+            
+        <% } else { %>
+            <div class="zero-pane">
+                <p class="no-prod">No Products found</p>
+            </div>
+        <% } %>
+      </div>
+    </div>
+<%- include('../includes/end.ejs') %>
