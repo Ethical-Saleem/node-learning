@@ -13,7 +13,7 @@
         <% for (let p of prods) { %>
         <div class="card-block">
           <div class="header">
-            <p><%= p.name %></p>
+            <p><%= p.productName %></p>
           </div>
           <div class="body">
             <div class="body-content">
@@ -39,7 +39,14 @@
             <div class="actions admin">
               <a href="/admin/products/<%= p.id %>" class="view-btn">View</a>
               <a href="/admin/edit-product/<%= p.id %>?edit=true" class="edit-btn">Edit</a>
-              <a href="/admin/products/<%= p.id %>" class="del-btn">Delete</a>
+              <div class="">
+                <form action="/admin/deleteProduct" method="POST">
+                  <div class="form-group">
+                    <input class="form-input" type="hidden" name="productId" value="<%= p.id %>" />
+                  </div>
+                  <button type="submit" class="del-btn">Delete</button>
+                </form>
+              </div>
             </div>
           </div>
         </div>

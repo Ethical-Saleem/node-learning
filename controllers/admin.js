@@ -1,31 +1,30 @@
 const Product = require("../models/products"); // importing the class model
 
 exports.getProducts = (req, res, next) => {
-  // statically fetching all available products from the class model
-  Product.fetchAll()
-    .then(([rows]) => {
+  Product.findAll()
+    .then((products) => {
       res.render("admin/products", {
         pageTitle: "Products",
         path: "admin/products",
-        prods: rows
+        prods: products,
       });
     })
-    .catch(err => {
-      console.log(err)
+    .catch((err) => {
+      console.log(err);
     });
 };
 
 exports.getProduct = (req, res, next) => {
   const id = req.params.productId;
-  Product.getProduct(id)
-    .then(([product]) => {
+  req.user.getProducts()
+    .then((product) => {
       res.render("admin/product", {
-        pageTitle: product[0].name,
+        pageTitle: product.productName,
         path: "/products",
-        prod: product[0],
+        prod: product,
       });
     })
-    .catch(err => console.log(err))
+    .catch((err) => console.log(err));
 };
 
 exports.getAddProduct = (req, res, next) => {
@@ -44,21 +43,20 @@ exports.postAddProduct = (req, res, next) => {
   const description = req.body.description;
   const amount = req.body.amount;
   const image = req.body.imageUrl;
-  const product = new Product(
-    id,
-    name,
-    description,
-    amount,
-    image
-  );
-  product
-    .save()
-    .then(rest => {
-      res.redirect("/admin/products")
+  req.user.createProduct(
+    {
+      productName: name,
+      description: description,
+      amount: amount,
+      imageUrl: image,
+    }
+  ).then((result) => {
+      console.log("New Product Created");
+      res.redirect("/admin/products");
     })
-    .catch(err => {
-      console.log(err)
-    }); // saving the product using the "saveAll" function declared in the model
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 exports.getEditProduct = (req, res, next) => {
@@ -68,38 +66,54 @@ exports.getEditProduct = (req, res, next) => {
     return res.redirect("/admin/products");
   }
   const id = req.params.productId;
-  Product.getProduct(id, (product) => {
-    if (!product) {
-      return res.redirect("/admin/products");
-    }
-    res.render("admin/edit-product", {
-      pageTitle: "Edit Product",
-      path: "/admin/edit-product",
-      editing: isEdit,
-      product: product,
+  req.user.getProducts({ where: { id: id } })
+    .then((products) => {
+      const product = products[0]
+      if (!product) {
+        return res.redirect("/admin/products");
+      }
+      res.render("admin/edit-product", {
+        pageTitle: "Edit Product",
+        path: "/admin/edit-product",
+        editing: isEdit,
+        product: product,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
     });
-  });
 };
 
 exports.updateProduct = (req, res, next) => {
   const id = req.body.productId;
-  const updName = req.body.name;
+  const updName = req.body.productName;
   const updDesc = req.body.description;
   const updAmnt = req.body.amount;
-  const updImg = req.body.imgUrl;
-  const updProduct = new Product(
-    id,
-    updName,
-    updDesc,
-    updAmnt,
-    updImg,
-  )
-  updProduct.save();
-  res.redirect('/admin/products');
+  const updImg = req.body.imageUrl;
+  Product.findByPk(id)
+    .then((product) => {
+      product.productName = updName;
+      product.description = updDesc;
+      product.amount = updAmnt;
+      product.imageUrl = updImg;
+      return product.save()
+    }).then((result) => {
+      console.log("Product updated successfully");
+      res.redirect("/admin/products");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 exports.deleteProduct = (req, res, next) => {
   const id = req.body.productId;
-  Product.deleteById(id);
-  res.redirect('/admin/products')
-}
+  Product.findByPk(id)
+    .then(product => {
+      return product.destroy()
+    }).then(result => {
+      console.log('Product deleted')
+      res.redirect("/admin/products");
+    })
+    .catch((err) => console.log(err));
+};

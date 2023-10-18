@@ -1,28 +1,27 @@
 const Product = require("../models/products"); // importing the class model
 
 exports.getProducts = (req, res, next) => {
-  // statically fetching all available products from the class model
-  Product.fetchAll()
-    .then(([rows, meta]) => {
-      res.render("shop/index", {
-        pageTitle: "Home",
-        path: "/",
-        prods: rows
+  Product.findAll()
+    .then((products) => {
+      res.render("shop/products", {
+        pageTitle: "Products",
+        path: "/products",
+        prods: products,
       });
     })
-    .catch(err => {
-      console.log(err)
+    .catch((err) => {
+      console.log(err);
     });
 };
 
 exports.getProduct = (req, res, next) => {
   const id = req.params.productId;
-  Product.getProduct(id)
-    .then(([product]) => {
+  Product.findByPk(id)
+    .then(product => {
       res.render("shop/product", {
-        pageTitle: product[0].name,
+        pageTitle: product.productName,
         path: "/products",
-        prod: product[0],
+        prod: product,
       });
     })
     .catch(err => console.log(err))

@@ -13,14 +13,14 @@
           <% for (let p of products) { %>
             <div class="card-block">
               <div class="header-view">
-                <p><%= p.productData.name %></p>
-                <span>(<%= p.quantity %>)</span>
+                <p><%= p.productName %></p>
+                <span>(<%= p.cartItem.quantity %>)</span>
               </div>
               <div class="body">
                 <div class="body-content">
                   <div class="image">
                     <img
-                    src="<%= p.productData.imgUrl %>"
+                    src="<%= p.imageUrl %>"
                     alt="shoe"
                     height="200"
                     width="250"
@@ -29,11 +29,11 @@
                   <div class="desc">
                     <div class="">
                       <span class="desc-title">Description</span>
-                      <p class="desc-text"><%= p.productData.description %></p>
+                      <p class="desc-text"><%= p.description %></p>
                     </div>
                     <div class="price">
                       <span class="price-title">Price</span>
-                      <span class="price-tag">$<%= p.productData.amount %></span>
+                      <span class="price-tag">$<%= p.amount %></span>
                     </div>
                   </div>
                 </div>
@@ -43,7 +43,7 @@
                       <button type="submit" class="cart-btn">
                         Remove
                       </button>
-                      <input type="hidden" name="productId" value="<%= p.productData.id %>" />
+                      <input type="hidden" name="productId" value="<%= p.id %>" />
                     </form>
                   </div>
                 </div>
