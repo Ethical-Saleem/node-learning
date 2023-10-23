@@ -1,8 +1,8 @@
 const Product = require("../models/products"); // importing the class model
-const Cart = require("../models/cart");
+// const Cart = require("../models/cart");
 
 exports.getIndex = (req, res, next) => {
-  Product.findAll()
+  Product.fetchAll()
     .then((products) => {
       res.render("shop/index", {
         pageTitle: "Home",

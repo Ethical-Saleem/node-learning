@@ -1,7 +1,7 @@
 const Product = require("../models/products"); // importing the class model
 
 exports.getProducts = (req, res, next) => {
-  Product.findAll()
+  Product.fetchAll()
     .then((products) => {
       res.render("shop/products", {
         pageTitle: "Products",

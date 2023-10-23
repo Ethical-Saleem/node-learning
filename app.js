@@ -7,13 +7,7 @@ const bodyPasrser = require("body-parser");
 
 const rootDir = require("./utils/path");
 
-const sequelize = require("./utils/database");
-const Product = require("./models/products");
-const User = require("./models/user");
-const Cart = require("./models/cart");
-const CartItem = require("./models/cart-item");
-const Order = require("./models/order");
-const OrderItem = require("./models/order-Item")
+const DbConnect = require("./utils/database").DbConnect;
 
 const app = express(); // creating express instance
 
@@ -22,26 +16,26 @@ app.set("views", "views");
 
 // importing our routes
 const adminRoutes = require("./routes/admin");
-const prodRoutes = require("./routes/shop");
+const shopRoutes = require("./routes/shop");
 
 // Creating Middlewares
 // create middlewares from topmost to bottom if you don't want to use the "next" argument
 app.use(bodyPasrser.urlencoded({ extended: false })); //create a middleware for body parsing which must be topmost since all requests has to be parsed first
 app.use(express.static(path.join(rootDir, "public"))); // for serving static files
 
-app.use((req, res, next) => {
-  User.findByPk(1)
-    .then((user) => {
-      req.user = user;
-      next();
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
+// app.use((req, res, next) => {
+//   User.findByPk(1)
+//     .then((user) => {
+//       req.user = user;
+//       next();
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// });
 
 app.use("/admin", adminRoutes);
-app.use(prodRoutes);
+app.use(shopRoutes);
 
 // creating 404 Not Found Page
 app.use((req, res, next) => {
@@ -51,39 +45,9 @@ app.use((req, res, next) => {
   });
 });
 
-Product.belongsTo(User, { constraints: true, onDelete: "CASCADE" });
-User.hasMany(Product);
-User.hasOne(Cart);
-Cart.belongsTo(User);
-Cart.belongsToMany(Product, { through: CartItem });
-Product.belongsToMany(Cart, { through: CartItem});
-Order.belongsTo(User);
-User.hasMany(Order);
-Order.belongsToMany(Product, { through: OrderItem });
+DbConnect(() => {
+  app.listen(3000);
+})
 
-sequelize
-  .sync()
-  .then((res) => {
-    return User.findByPk(1);
-  })
-  .then((user) => {
-    if (!user) {
-      return User.create({
-        fullName: "Olubisi Ayeni",
-        email: "testemail@gmail.com",
-        age: 23,
-      });
-    }
-    return user;
-  })
-  .then((user) => {
-    return user.createCart();
-  })
-  .then((cart) => {
-    app.listen(3000);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
 
 // Using ".use" allows the middleware to handle all http methods (POST, GET, PUT, DELETE, etc)
