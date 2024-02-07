@@ -35,11 +35,11 @@
                 </div>
               </div>
               <div class="actions admin">
-                <a href="/admin/edit-product/<%= prod.id %>?edit=true" class="edit-btn">Edit</a>
+                <a href="/admin/edit-product/<%= prod._id %>?edit=true" class="edit-btn">Edit</a>
                 <div class="">
                   <form action="/admin/deleteProduct" method="POST">
                     <div class="form-group">
-                      <input class="form-input" type="hidden" name="productId" value="<%= prod.id %>" />
+                      <input class="form-input" type="hidden" name="productId" value="<%= prod._id %>" />
                     </div>
                     <button type="submit" class="del-btn">Delete</button>
                   </form>

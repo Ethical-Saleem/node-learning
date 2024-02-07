@@ -16,8 +16,7 @@ exports.getProducts = (req, res, next) => {
 
 exports.getProduct = (req, res, next) => {
   const id = req.params.productId;
-  req.user
-    .getProducts()
+  Product.findById(id)
     .then((product) => {
       res.render("admin/product", {
         pageTitle: product.productName,
@@ -43,7 +42,7 @@ exports.postAddProduct = (req, res, next) => {
   const description = req.body.description;
   const amount = req.body.amount;
   const image = req.body.imageUrl;
-  const product = new Product(name, description, amount, image);
+  const product = new Product(name, description, amount, image, null, req.user._id);
   product
     .save()
     .then((result) => {
@@ -62,10 +61,8 @@ exports.getEditProduct = (req, res, next) => {
     return res.redirect("/admin/products");
   }
   const id = req.params.productId;
-  req.user
-    .getProducts({ where: { id: id } })
-    .then((products) => {
-      const product = products[0];
+  Product.findById(id)
+    .then((product) => {
       if (!product) {
         return res.redirect("/admin/products");
       }
@@ -87,14 +84,15 @@ exports.updateProduct = (req, res, next) => {
   const updDesc = req.body.description;
   const updAmnt = req.body.amount;
   const updImg = req.body.imageUrl;
-  Product.findByPk(id)
-    .then((product) => {
-      product.productName = updName;
-      product.description = updDesc;
-      product.amount = updAmnt;
-      product.imageUrl = updImg;
-      return product.save();
-    })
+  
+  const product = new Product(
+    updName,
+    updDesc,
+    updAmnt,
+    updImg,
+    id
+  );
+  product.save()
     .then((result) => {
       console.log("Product updated successfully");
       res.redirect("/admin/products");
@@ -106,10 +104,8 @@ exports.updateProduct = (req, res, next) => {
 
 exports.deleteProduct = (req, res, next) => {
   const id = req.body.productId;
-  Product.findByPk(id)
-    .then((product) => {
-      return product.destroy();
-    })
+  Product
+    .deleteById(id)
     .then((result) => {
       console.log("Product deleted");
       res.redirect("/admin/products");

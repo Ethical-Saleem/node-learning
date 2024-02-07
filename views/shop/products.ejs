@@ -37,13 +37,13 @@
               </div>
             </div>
             <div class="actions">
-              <a href="/products/<%= p.id %>" class="view-btn">View</a>
+              <a href="/products/<%= p._id %>" class="view-btn">View</a>
               <div class="">
                 <form action="/cart" method="POST">
                   <button type="submit" class="cart-btn">
                     Add to Cart
                   </button>
-                  <input type="hidden" name="productId" value="<%= p.id %>" />
+                  <input type="hidden" name="productId" value="<%= p._id %>" />
                 </form>
               </div>
             </div>

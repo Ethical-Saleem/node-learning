@@ -11,6 +11,8 @@ const DbConnect = require("./utils/database").DbConnect;
 
 const app = express(); // creating express instance
 
+const User = require("./models/user");
+
 app.set("view engine", "ejs");
 app.set("views", "views");
 
@@ -23,16 +25,25 @@ const shopRoutes = require("./routes/shop");
 app.use(bodyPasrser.urlencoded({ extended: false })); //create a middleware for body parsing which must be topmost since all requests has to be parsed first
 app.use(express.static(path.join(rootDir, "public"))); // for serving static files
 
-// app.use((req, res, next) => {
-//   User.findByPk(1)
-//     .then((user) => {
-//       req.user = user;
-//       next();
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// });
+app.use((req, res, next) => {
+  User.findById("65c38c7b2defe6963cd12efb")
+    .then((user) => {
+      req.user = new User(
+        user.firstName,
+        user.lastName,
+        user.email,
+        user.telephone,
+        user.address,
+        user.userCode,
+        user._id,
+        user.cart
+      );
+      next();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 
 app.use("/admin", adminRoutes);
 app.use(shopRoutes);
@@ -47,7 +58,6 @@ app.use((req, res, next) => {
 
 DbConnect(() => {
   app.listen(3000);
-})
-
+});
 
 // Using ".use" allows the middleware to handle all http methods (POST, GET, PUT, DELETE, etc)

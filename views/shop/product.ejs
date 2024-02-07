@@ -11,13 +11,13 @@
       <div class="product">
         <div class="card-block">
             <div class="header-view">
-              <p><%= prod.productName %></p>
+              <p><%= prod.name %></p>
               <div class="">
                 <form action="/cart" method="POST">
                   <button type="submit" class="cart-btn">
                     Add to Cart
                   </button>
-                  <input type="hidden" name="productId" value="<%= prod.id %>" />
+                  <input type="hidden" name="productId" value="<%= prod %>" />
                 </form>
               </div>
             </div>
