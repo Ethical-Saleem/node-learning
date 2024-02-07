@@ -7,7 +7,7 @@ const bodyPasrser = require("body-parser");
 
 const rootDir = require("./utils/path");
 
-const DbConnect = require("./utils/database").DbConnect;
+const mongoose = require("mongoose");
 
 const app = express(); // creating express instance
 
@@ -56,8 +56,15 @@ app.use((req, res, next) => {
   });
 });
 
-DbConnect(() => {
-  app.listen(3000);
-});
+mongoose
+  .connect(
+    "mongodb+srv://abdussalam:chasesuno6@node-learn.qge821f.mongodb.net/shop?retryWrites=true&w=majority"
+  )
+  .then(() => {
+    app.listen(3000);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 // Using ".use" allows the middleware to handle all http methods (POST, GET, PUT, DELETE, etc)
