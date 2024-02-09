@@ -21,15 +21,15 @@
           <% for (let p of products) { %>
             <div class="card-block">
               <div class="header-view">
-                <p><%= p.name %></p>
+                <p><%= p.product.name %></p>
                 <span>(<%= p.quantity %>)</span>
               </div>
               <div class="body">
                 <div class="body-content">
                   <div class="image">
                     <img
-                    src="<%= p.imageUrl %>"
-                    alt="shoe"
+                    src="<%= p.product.imageUrl %>"
+                    alt="<%= p.product.name %>"
                     height="200"
                     width="250"
                     />
@@ -37,11 +37,11 @@
                   <div class="desc">
                     <div class="">
                       <span class="desc-title">Description</span>
-                      <p class="desc-text"><%= p.description %></p>
+                      <p class="desc-text"><%= p.product.description %></p>
                     </div>
                     <div class="price">
                       <span class="price-title">Price</span>
-                      <span class="price-tag">$<%= p.amount %></span>
+                      <span class="price-tag">$<%= p.product.amount %></span>
                     </div>
                   </div>
                 </div>

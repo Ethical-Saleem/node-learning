@@ -26,10 +26,10 @@
                         <hr>
                         <% for (let p of order.items) { %>
                             <div class="item-desc">
-                                <span class="s/n"><%= p._id %></span>
-                                <span class="txnId"><%= p.name %></span>
-                                <span class="desc"><%= p.description %></span>
-                                <span class="price">$ <%= p.amount %></span>
+                                <span class="s/n"><%= p.product._id %></span>
+                                <span class="txnId"><%= p.product.name %></span>
+                                <span class="desc"><%= p.product.description %></span>
+                                <span class="price">$ <%= p.product.amount %></span>
                                 <span class="price"><%= p.quantity %></span>
                             </div>
                         <% } %>

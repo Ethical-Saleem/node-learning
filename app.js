@@ -26,18 +26,9 @@ app.use(bodyPasrser.urlencoded({ extended: false })); //create a middleware for 
 app.use(express.static(path.join(rootDir, "public"))); // for serving static files
 
 app.use((req, res, next) => {
-  User.findById("65c38c7b2defe6963cd12efb")
+  User.findById("65c52cb666b697471be08ed6")
     .then((user) => {
-      req.user = new User(
-        user.firstName,
-        user.lastName,
-        user.email,
-        user.telephone,
-        user.address,
-        user.userCode,
-        user._id,
-        user.cart
-      );
+      req.user = user;
       next();
     })
     .catch((err) => {
@@ -61,6 +52,22 @@ mongoose
     "mongodb+srv://abdussalam:chasesuno6@node-learn.qge821f.mongodb.net/shop?retryWrites=true&w=majority"
   )
   .then(() => {
+    User.findOne().then(user => {
+      if (!user) {
+        const user = new User({
+          firstName: 'Saleem',
+          lastName: 'Abdussalam',
+          email: 'saleemabdussalam404@gmail.com',
+          telephone: '08122084349',
+          address: '20, Abraham Oke Street, Ikorodu, Lagos',
+          userCode: 'USER-0001',
+          cart: {
+            items: []
+          }
+        })
+        user.save();
+      }
+    })
     app.listen(3000);
   })
   .catch((err) => {

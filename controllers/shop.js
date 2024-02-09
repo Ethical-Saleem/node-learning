@@ -1,8 +1,8 @@
 const Product = require("../models/products"); // importing the class model
-// const Cart = require("../models/cart");
+const Order = require("../models/order");
 
 exports.getIndex = (req, res, next) => {
-  Product.fetchAll()
+  Product.find()
     .then((products) => {
       res.render("shop/index", {
         pageTitle: "Home",
@@ -17,8 +17,9 @@ exports.getIndex = (req, res, next) => {
 
 exports.getCart = (req, res, next) => {
   req.user
-    .getCart()
-    .then((products) => {
+    .populate("cart.items.product")
+    .then((user) => {
+      const products = user.cart.items;
       res.render("shop/cart", {
         pageTitle: "Cart",
         path: "/cart",
@@ -45,15 +46,16 @@ exports.removeFromCart = (req, res, next) => {
   const id = req.body.productId;
   return req.user
     .deleteFromCart(id)
-    .then(() => {
+    .then((result) => {
+      console.log(result);
       res.redirect("/cart");
     })
     .catch((err) => console.log(err));
 };
 
 exports.getOrder = (req, res, next) => {
-  req.user
-    .getOrders()
+  const id = req.user._id;
+  Order.find({ userId: id })
     .then((orders) => {
       res.render("shop/orders", {
         pageTitle: "Your Orders",
@@ -66,8 +68,30 @@ exports.getOrder = (req, res, next) => {
 
 exports.postOrder = (req, res, next) => {
   req.user
-    .addOrder()
-    .then((result) => {
+    .populate("cart.items.product")
+    .then((user) => {
+      const products = user.cart.items.map((item) => {
+        return {
+          product: { ...item.product._doc },
+          quantity: item.quantity,
+        };
+      });
+
+      const order = new Order({
+        items: products,
+        user: {
+          firstName: req.user.firstName,
+          lastName: req.user.lastName,
+          userCode: req.user.userCode,
+        },
+        userId: req.user,
+      });
+      return order.save();
+    })
+    .then(() => {
+      return req.user.clearCart();
+    })
+    .then(() => {
       res.redirect("/orders");
     })
     .catch((err) => console.log(err));

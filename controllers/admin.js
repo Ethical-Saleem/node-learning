@@ -1,7 +1,7 @@
 const Product = require("../models/products"); // importing the class model
 
 exports.getProducts = (req, res, next) => {
-  Product.fetchAll()
+  Product.find()
     .then((products) => {
       res.render("admin/products", {
         pageTitle: "Products",
@@ -42,11 +42,19 @@ exports.postAddProduct = (req, res, next) => {
   const description = req.body.description;
   const amount = req.body.amount;
   const image = req.body.imageUrl;
-  const product = new Product(name, description, amount, image, null, req.user._id);
+  const quantity = req.body.quantity;
+  const product = new Product({
+    name: name,
+    description: description,
+    amount: amount,
+    imageUrl: image,
+    quantity: quantity,
+    userId: req.user
+  });
   product
     .save()
     .then((result) => {
-      console.log("New Product Created");
+      console.log("New Produc Created");
       res.redirect("/admin/products");
     })
     .catch((err) => {
@@ -55,7 +63,7 @@ exports.postAddProduct = (req, res, next) => {
 };
 
 exports.getEditProduct = (req, res, next) => {
-  // gettign qury params if availaable
+  // gettign query params if availaable
   const isEdit = req.query.edit;
   if (!isEdit) {
     return res.redirect("/admin/products");
@@ -84,15 +92,18 @@ exports.updateProduct = (req, res, next) => {
   const updDesc = req.body.description;
   const updAmnt = req.body.amount;
   const updImg = req.body.imageUrl;
-  
-  const product = new Product(
-    updName,
-    updDesc,
-    updAmnt,
-    updImg,
-    id
-  );
-  product.save()
+  const updQty = req.body.quantity;
+
+  Product.findById(id)
+    .then((product) => {
+      product.name = updName;
+      product.description = updDesc;
+      product.amount = parseFloat(updAmnt);
+      product.imageUrl = updImg;
+      product.quantity = parseFloat(updQty);
+
+      return product.save();
+    })
     .then((result) => {
       console.log("Product updated successfully");
       res.redirect("/admin/products");
@@ -104,8 +115,7 @@ exports.updateProduct = (req, res, next) => {
 
 exports.deleteProduct = (req, res, next) => {
   const id = req.body.productId;
-  Product
-    .deleteById(id)
+  Product.findByIdAndDelete(id)
     .then((result) => {
       console.log("Product deleted");
       res.redirect("/admin/products");
